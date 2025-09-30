@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #0066cc;
-            --secondary: #ff6600;
+            --primary: #B03060; /* Maroon color */
+            --secondary: #FFFFFF; /* White color */
             --dark: #333;
             --light: #f8f9fa;
             --gray: #6c757d;
@@ -24,7 +24,24 @@
         body {
             line-height: 1.6;
             color: var(--dark);
-            background-color: #f5f7fa;
+            /* Background slideshow for the entire site */
+            background-image: url('https://i.ibb.co/tMf3Mx9g/Polish-20250930-103413374.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+        
+        /* Background overlay for better readability */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            z-index: -1;
         }
         
         .container {
@@ -36,7 +53,8 @@
         
         /* Header Styles */
         header {
-            background-color: white;
+            background-color: var(--primary); /* Maroon background */
+            color: var(--secondary); /* White text */
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
@@ -50,19 +68,9 @@
             padding: 15px 0;
         }
         
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo h1 {
-            font-size: 1.8rem;
-            color: var(--primary);
-            margin-left: 10px;
-        }
-        
-        .logo span {
-            color: var(--secondary);
+        .logo img {
+            height: 50px;
+            width: auto;
         }
         
         nav ul {
@@ -76,69 +84,94 @@
         
         nav ul li a {
             text-decoration: none;
-            color: var(--dark);
+            color: var(--secondary); /* White text */
             font-weight: 500;
             transition: color 0.3s;
         }
         
         nav ul li a:hover {
-            color: var(--primary);
+            color: #ffcc00; /* Gold color on hover */
         }
         
         .mobile-menu {
             display: none;
             font-size: 1.5rem;
             cursor: pointer;
+            color: var(--secondary);
         }
         
-        /* Hero Slider */
-        .hero-slider {
-            position: relative;
-            height: 500px;
-            overflow: hidden;
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+            background-color: rgba(176, 48, 96, 0.1); /* Light maroon overlay */
             margin-bottom: 50px;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--dark);
+        }
+        
+        /* Image Slider Section */
+        .image-slider {
+            margin: 50px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
         .slides {
             display: flex;
-            width: 400%;
-            height: 100%;
             transition: transform 0.8s ease-in-out;
         }
         
         .slide {
-            width: 25%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
+            min-width: 100%;
+            position: relative;
+        }
+        
+        .slide img {
+            width: 100%;
+            display: block;
         }
         
         .slider-controls {
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            right: 0;
             display: flex;
             justify-content: center;
+            margin-top: 15px;
         }
         
         .slider-dot {
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background-color: rgba(255,255,255,0.5);
+            background-color: rgba(176, 48, 96, 0.3);
             margin: 0 5px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
         
         .slider-dot.active {
-            background-color: white;
+            background-color: var(--primary);
         }
         
         /* Sections */
         section {
             padding: 60px 0;
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
         
         .section-title {
@@ -158,6 +191,17 @@
             margin: 0 auto;
         }
         
+        /* Kafunda Net Logo in Packages Section */
+        .kafunda-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .kafunda-logo img {
+            max-height: 80px;
+            width: auto;
+        }
+        
         /* Services */
         .services-grid {
             display: grid;
@@ -172,6 +216,7 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             text-align: center;
             transition: transform 0.3s;
+            border-top: 4px solid var(--primary);
         }
         
         .service-card:hover {
@@ -204,10 +249,12 @@
             text-align: center;
             transition: transform 0.3s;
             position: relative;
+            border: 1px solid #e0e0e0;
         }
         
         .package-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
         
         .package-card.popular::before {
@@ -216,7 +263,7 @@
             top: 0;
             left: 0;
             right: 0;
-            background: var(--secondary);
+            background: var(--primary);
             color: white;
             padding: 5px;
             font-size: 0.8rem;
@@ -242,6 +289,8 @@
         .package-price {
             font-size: 1.5rem;
             margin: 10px 0;
+            color: var(--primary);
+            font-weight: bold;
         }
         
         .package-features {
@@ -260,10 +309,11 @@
         
         /* CTA Buttons */
         .cta-section {
-            background: linear-gradient(135deg, var(--primary), #004d99);
+            background: linear-gradient(135deg, var(--primary), #8c274a);
             color: white;
             text-align: center;
             padding: 70px 0;
+            border-radius: 10px;
         }
         
         .cta-buttons {
@@ -292,21 +342,23 @@
         
         .btn-primary {
             background: var(--secondary);
-            color: white;
+            color: var(--primary);
         }
         
         .btn-primary:hover {
-            background: #e55c00;
+            background: #f0f0f0;
             transform: translateY(-3px);
         }
         
         .btn-secondary {
-            background: white;
-            color: var(--primary);
+            background: transparent;
+            color: var(--secondary);
+            border: 2px solid var(--secondary);
         }
         
         .btn-secondary:hover {
-            background: #f0f0f0;
+            background: var(--secondary);
+            color: var(--primary);
             transform: translateY(-3px);
         }
         
@@ -322,9 +374,10 @@
         
         /* Footer */
         footer {
-            background: var(--dark);
+            background: var(--primary);
             color: white;
             padding: 50px 0 20px;
+            border-radius: 10px 10px 0 0;
         }
         
         .footer-content {
@@ -337,11 +390,11 @@
         .footer-column h3 {
             font-size: 1.3rem;
             margin-bottom: 20px;
-            color: var(--secondary);
+            color: #ffcc00; /* Gold color for headings */
         }
         
         .footer-column p, .footer-column a {
-            color: #bbb;
+            color: #e0e0e0;
             margin-bottom: 10px;
             display: block;
             text-decoration: none;
@@ -349,6 +402,25 @@
         
         .footer-column a:hover {
             color: white;
+        }
+        
+        .partner-logos {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .partner-logos img {
+            max-height: 60px;
+            width: auto;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
+        
+        .partner-logos img:hover {
+            opacity: 1;
         }
         
         .social-links {
@@ -370,7 +442,8 @@
         }
         
         .social-links a:hover {
-            background: var(--primary);
+            background: var(--secondary);
+            color: var(--primary);
             transform: translateY(-3px);
         }
         
@@ -378,7 +451,7 @@
             text-align: center;
             padding-top: 20px;
             border-top: 1px solid rgba(255,255,255,0.1);
-            color: #bbb;
+            color: #e0e0e0;
             font-size: 0.9rem;
         }
         
@@ -386,14 +459,37 @@
         @media (max-width: 768px) {
             nav {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--primary);
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
             }
             
             .mobile-menu {
                 display: block;
             }
             
-            .hero-slider {
-                height: 350px;
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
             }
             
             .cta-buttons {
@@ -405,19 +501,24 @@
                 width: 100%;
                 max-width: 300px;
             }
+            
+            .partner-logos {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
+    <!-- Header with Logo -->
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <i class="fas fa-wifi fa-2x" style="color: var(--primary);"></i>
-                    <h1>Sprint <span>Telecom</span></h1>
+                    <!-- Inserted the main company logo as requested -->
+                    <img src="https://i.ibb.co/jvKLzM9K/Polish-20250930-095438799.jpg" alt="Sprint Telecom Uganda">
                 </div>
-                <nav>
+                <nav id="mainNav">
                     <ul>
                         <li><a href="#home">Home</a></li>
                         <li><a href="#services">Services</a></li>
@@ -426,26 +527,53 @@
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </nav>
-                <div class="mobile-menu">
+                <div class="mobile-menu" id="mobileMenu">
                     <i class="fas fa-bars"></i>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Hero Slider -->
-    <section class="hero-slider" id="home">
-        <div class="slides">
-            <div class="slide" style="background-image: url('https://i.ibb.co/FbSDCZ1T/Polish-20250929-205752741.jpg');"></div>
-            <div class="slide" style="background-image: url('https://i.ibb.co/7NWX5yNM/Polish-20250929-205853667.jpg');"></div>
-            <div class="slide" style="background-image: url('https://i.ibb.co/fVVbYm3r/Polish-20250929-205953085.jpg');"></div>
-            <div class="slide" style="background-image: url('https://i.ibb.co/DfqkBvhf/Polish-20250929-210032790.jpg');"></div>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Experience Lightning-Fast Fiber Internet</h1>
+            <p>Connecting lives across Uganda with reliable, high-speed internet solutions for homes and businesses.</p>
+            <div class="cta-buttons">
+                <a href="tel:0704677599" class="btn btn-primary">
+                    <i class="fas fa-phone"></i> Call Now
+                </a>
+                <a href="https://wa.me/256771743454" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+            </div>
         </div>
-        <div class="slider-controls">
-            <div class="slider-dot active" data-index="0"></div>
-            <div class="slider-dot" data-index="1"></div>
-            <div class="slider-dot" data-index="2"></div>
-            <div class="slider-dot" data-index="3"></div>
+    </section>
+
+    <!-- Marketing Images Slider -->
+    <section class="image-slider">
+        <div class="container">
+            <div class="slides">
+                <!-- All four marketing images fully displayed as requested -->
+                <div class="slide">
+                    <img src="https://i.ibb.co/FbSDCZ1T/Polish-20250929-205752741.jpg" alt="Kafunda Net Marketing Image 1">
+                </div>
+                <div class="slide">
+                    <img src="https://i.ibb.co/7NWX5yNM/Polish-20250929-205853667.jpg" alt="Kafunda Net Marketing Image 2">
+                </div>
+                <div class="slide">
+                    <img src="https://i.ibb.co/fVVbYm3r/Polish-20250929-205953085.jpg" alt="Kafunda Net Marketing Image 3">
+                </div>
+                <div class="slide">
+                    <img src="https://i.ibb.co/DfqkBvhf/Polish-20250929-210032790.jpg" alt="Kafunda Net Marketing Image 4">
+                </div>
+            </div>
+            <div class="slider-controls">
+                <div class="slider-dot active" data-index="0"></div>
+                <div class="slider-dot" data-index="1"></div>
+                <div class="slider-dot" data-index="2"></div>
+                <div class="slider-dot" data-index="3"></div>
+            </div>
         </div>
     </section>
 
@@ -493,7 +621,11 @@
     <section id="packages">
         <div class="container">
             <div class="section-title">
-                <h2>Kafunda Net Unlimited Packages</h2>
+                <!-- Kafunda Net logo inserted in the packages section as requested -->
+                <div class="kafunda-logo">
+                    <img src="https://i.ibb.co/F47RW4yh/Polish-20250930-095718710.jpg" alt="Kafunda Net">
+                </div>
+                <h2>Unlimited Internet Packages</h2>
                 <p>Choose from our range of affordable unlimited internet packages designed to meet your connectivity needs.</p>
             </div>
             <div class="packages-container">
@@ -506,7 +638,8 @@
                     <ul class="package-features">
                         <li>Unlimited Data</li>
                         <li>Streaming & Browsing</li>
-                        <li>Up to 5 Devices</li>
+                        <li>Up to 3 Devices</li>
+                        <li>Free Installation</li>
                         <li>24/7 Support</li>
                     </ul>
                 </div>
@@ -519,186 +652,9 @@
                     <ul class="package-features">
                         <li>Unlimited Data</li>
                         <li>HD Streaming</li>
-                        <li>Up to 10 Devices</li>
+                        <li>Up to 6 Devices</li>
+                        <li>Free Installation</li>
                         <li>Priority Support</li>
-                        <li>Free Installation*</li>
                     </ul>
                 </div>
-                <div class="package-card">
-                    <div class="package-header">
-                        <div class="package-name">Gold</div>
-                        <div class="package-speed">20 Mbps</div>
-                    </div>
-                    <div class="package-price">UGX 105,000/month</div>
-                    <ul class="package-features">
-                        <li>Unlimited Data</li>
-                        <li>4K Streaming</li>
-                        <li>Up to 20 Devices</li>
-                        <li>Priority Support</li>
-                        <li>Free Installation*</li>
-                    </ul>
-                </div>
-                <div class="package-card">
-                    <div class="package-header">
-                        <div class="package-name">Platinum</div>
-                        <div class="package-speed">50 Mbps</div>
-                    </div>
-                    <div class="package-price">UGX 155,000/month</div>
-                    <ul class="package-features">
-                        <li>Unlimited Data</li>
-                        <li>4K & Gaming</li>
-                        <li>Unlimited Devices</li>
-                        <li>Premium Support</li>
-                        <li>Free Installation*</li>
-                    </ul>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 20px; color: var(--gray);">
-                <p>*Free installation (UGX 130,000 value) with 1 month free on 10Mbps and higher packages</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section" id="contact">
-        <div class="container">
-            <h2 style="font-size: 2.2rem; margin-bottom: 15px;">Get Connected Today</h2>
-            <p style="max-width: 700px; margin: 0 auto 30px; font-size: 1.1rem;">Experience the fastest and most reliable fiber internet in Kampala. Join the Kafunda Net family today!</p>
-            <div class="cta-buttons">
-                <a href="tel:0704677599" class="btn btn-primary">
-                    <i class="fas fa-phone"></i> Call Now
-                </a>
-                <a href="https://wa.me/256771743454" class="btn btn-whatsapp">
-                    <i class="fab fa-whatsapp"></i> WhatsApp
-                </a>
-                <a href="#" class="btn btn-secondary payment-install">
-                    <i class="fas fa-money-bill-wave"></i> Payment - New Installation
-                </a>
-                <a href="https://wispuser.com/sprinttelecom" class="btn btn-secondary">
-                    <i class="fas fa-sync-alt"></i> Payment - Monthly Renewal
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Sprint Telecom Uganda</h3>
-                    <p>Your trusted partner for high-speed fiber internet in Kampala and surrounding areas. We're committed to providing reliable connectivity solutions for homes and businesses.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <a href="#home">Home</a>
-                    <a href="#services">Services</a>
-                    <a href="#packages">Packages</a>
-                    <a href="#about">About Us</a>
-                    <a href="#contact">Contact</a>
-                </div>
-                <div class="footer-column">
-                    <h3>Contact Info</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Munyonyo, Kampala, Uganda</p>
-                    <p><i class="fas fa-phone"></i> 0704677599</p>
-                    <p><i class="fab fa-whatsapp"></i> 0771743454</p>
-                    <p><i class="fas fa-envelope"></i> info@sprinttelecom.ug</p>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2023 Sprint Telecom Uganda. All Rights Reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Payment Modal -->
-    <div id="paymentModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; align-items: center; justify-content: center;">
-        <div style="background: white; padding: 30px; border-radius: 10px; max-width: 500px; width: 90%; text-align: center;">
-            <h3 style="color: var(--primary); margin-bottom: 20px;">New Installation Payment</h3>
-            <p>Kindly make payment of UGX 130,000 via MTN Mobile Money to:</p>
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0; font-weight: bold; font-size: 1.2rem;">
-                0771743454
-            </div>
-            <p>After payment, share the proof of payment via WhatsApp for initial installation setup.</p>
-            <div style="margin-top: 25px;">
-                <a href="https://wa.me/256771743454" class="btn btn-whatsapp" style="margin-right: 10px;">
-                    <i class="fab fa-whatsapp"></i> Share Proof on WhatsApp
-                </a>
-                <button id="closeModal" class="btn btn-secondary">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Auto-sliding image carousel
-        let currentSlide = 0;
-        const slides = document.querySelector('.slides');
-        const dots = document.querySelectorAll('.slider-dot');
-        const totalSlides = 4;
-        
-        function showSlide(index) {
-            if (index >= totalSlides) {
-                currentSlide = 0;
-            } else if (index < 0) {
-                currentSlide = totalSlides - 1;
-            } else {
-                currentSlide = index;
-            }
-            
-            slides.style.transform = `translateX(-${currentSlide * 25}%)`;
-            
-            // Update active dot
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === currentSlide);
-            });
-        }
-        
-        // Auto slide every 5 seconds
-        setInterval(() => {
-            showSlide(currentSlide + 1);
-        }, 5000);
-        
-        // Dot click events
-        dots.forEach((dot, i) => {
-            dot.addEventListener('click', () => {
-                showSlide(i);
-            });
-        });
-        
-        // Payment modal functionality
-        const paymentBtn = document.querySelector('.payment-install');
-        const paymentModal = document.getElementById('paymentModal');
-        const closeModal = document.getElementById('closeModal');
-        
-        paymentBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            paymentModal.style.display = 'flex';
-        });
-        
-        closeModal.addEventListener('click', () => {
-            paymentModal.style.display = 'none';
-        });
-        
-        // Close modal when clicking outside
-        window.addEventListener('click', (e) => {
-            if (e.target === paymentModal) {
-                paymentModal.style.display = 'none';
-            }
-        });
-        
-        // Mobile menu toggle
-        const mobileMenu = document.querySelector('.mobile-menu');
-        const nav = document.querySelector('nav');
-        
-        mobileMenu.addEventListener('click', () => {
-            nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
-        });
-    </script>
-</body>
-</html>
+                <div class="packa
