@@ -24,24 +24,42 @@
         body {
             line-height: 1.6;
             color: var(--dark);
-            /* Background slideshow for the entire site */
-            background-image: url('https://i.ibb.co/tMf3Mx9g/Polish-20250930-103413374.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
             position: relative;
+            min-height: 100vh;
         }
         
-        /* Background overlay for better readability */
-        body::before {
-            content: '';
+        /* Background slideshow for the entire site */
+        .bg-slideshow {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.85);
-            z-index: -1;
+            z-index: -2;
+        }
+        
+        .bg-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .bg-slide.active {
+            opacity: 1;
+        }
+        
+        /* Background overlay for better readability */
+        .content-overlay {
+            position: relative;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.92);
         }
         
         .container {
@@ -106,7 +124,6 @@
             text-align: center;
             background-color: rgba(176, 48, 96, 0.1); /* Light maroon overlay */
             margin-bottom: 50px;
-            border-radius: 0 0 10px 10px;
         }
         
         .hero h1 {
@@ -128,6 +145,12 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .slides-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
         }
         
         .slides {
@@ -168,10 +191,7 @@
         /* Sections */
         section {
             padding: 60px 0;
-            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
             margin-bottom: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
         
         .section-title {
@@ -455,6 +475,30 @@
             font-size: 0.9rem;
         }
         
+        /* Payment Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             nav {
@@ -510,151 +554,362 @@
     </style>
 </head>
 <body>
-    <!-- Header with Logo -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <!-- Inserted the main company logo as requested -->
-                    <img src="https://i.ibb.co/jvKLzM9K/Polish-20250930-095438799.jpg" alt="Sprint Telecom Uganda">
-                </div>
-                <nav id="mainNav">
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#packages">Packages</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </nav>
-                <div class="mobile-menu" id="mobileMenu">
-                    <i class="fas fa-bars"></i>
+    <!-- Background Slideshow -->
+    <div class="bg-slideshow">
+        <div class="bg-slide active" style="background-image: url('https://i.ibb.co/tMf3Mx9g/Polish-20250930-103413374.jpg');"></div>
+        <div class="bg-slide" style="background-image: url('https://i.ibb.co/YBjr5g3h/Polish-20250930-103338063.jpg');"></div>
+        <div class="bg-slide" style="background-image: url('https://i.ibb.co/GvjgNm0C/Polish-20250930-103219172.jpg');"></div>
+    </div>
+    
+    <!-- Content Overlay -->
+    <div class="content-overlay">
+        <!-- Header with Logo -->
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <img src="https://i.ibb.co/jvKLzM9K/Polish-20250930-095438799.jpg" alt="Sprint Telecom Uganda">
+                    </div>
+                    <nav id="mainNav">
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#services">Services</a></li>
+                            <li><a href="#packages">Packages</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </nav>
+                    <div class="mobile-menu" id="mobileMenu">
+                        <i class="fas fa-bars"></i>
+                    </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container">
-            <h1>Experience Lightning-Fast Fiber Internet</h1>
-            <p>Connecting lives across Uganda with reliable, high-speed internet solutions for homes and businesses.</p>
-            <div class="cta-buttons">
-                <a href="tel:0704677599" class="btn btn-primary">
-                    <i class="fas fa-phone"></i> Call Now
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="container">
+                <h1>Experience Lightning-Fast Fiber Internet</h1>
+                <p>Connecting lives across Uganda with reliable, high-speed internet solutions for homes and businesses.</p>
+                <div class="cta-buttons">
+                    <a href="tel:0704677599" class="btn btn-primary">
+                        <i class="fas fa-phone"></i> Call Now
+                    </a>
+                    <a href="https://wa.me/256771743454" class="btn btn-whatsapp">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marketing Images Slider -->
+        <section class="image-slider">
+            <div class="container">
+                <div class="slides-container">
+                    <div class="slides">
+                        <div class="slide">
+                            <img src="https://i.ibb.co/FbSDCZ1T/Polish-20250929-205752741.jpg" alt="Kafunda Net Marketing Image 1">
+                        </div>
+                        <div class="slide">
+                            <img src="https://i.ibb.co/7NWX5yNM/Polish-20250929-205853667.jpg" alt="Kafunda Net Marketing Image 2">
+                        </div>
+                        <div class="slide">
+                            <img src="https://i.ibb.co/fVVbYm3r/Polish-20250929-205953085.jpg" alt="Kafunda Net Marketing Image 3">
+                        </div>
+                        <div class="slide">
+                            <img src="https://i.ibb.co/DfqkBvhf/Polish-20250929-210032790.jpg" alt="Kafunda Net Marketing Image 4">
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <div class="slider-dot active" data-index="0"></div>
+                    <div class="slider-dot" data-index="1"></div>
+                    <div class="slider-dot" data-index="2"></div>
+                    <div class="slider-dot" data-index="3"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Services</h2>
+                    <p>We provide reliable, high-speed fiber internet solutions for homes and businesses in Kampala and surrounding areas.</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h3>Residential Fiber Internet</h3>
+                        <p>High-speed unlimited internet for your home with seamless connectivity for streaming, gaming, and remote work.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3>Business Fiber Solutions</h3>
+                        <p>Dedicated fiber connections for businesses with guaranteed uptime and priority support for uninterrupted operations.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                        <h3>Wireless Solutions</h3>
+                        <p>Wireless internet solutions for areas where fiber infrastructure is still expanding.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>24/7 Technical Support</h3>
+                        <p>Round-the-clock customer support to ensure your connection remains stable and reliable.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Packages Section -->
+        <section id="packages">
+            <div class="container">
+                <div class="section-title">
+                    <div class="kafunda-logo">
+                        <img src="https://i.ibb.co/F47RW4yh/Polish-20250930-095718710.jpg" alt="Kafunda Net">
+                    </div>
+                    <h2>Unlimited Internet Packages</h2>
+                    <p>Choose from our range of affordable unlimited internet packages designed to meet your connectivity needs.</p>
+                </div>
+                <div class="packages-container">
+                    <div class="package-card">
+                        <div class="package-header">
+                            <div class="package-name">Premium</div>
+                            <div class="package-speed">5 Mbps</div>
+                        </div>
+                        <div class="package-price">UGX 35,000/month</div>
+                        <ul class="package-features">
+                            <li>Unlimited Data</li>
+                            <li>Streaming & Browsing</li>
+                            <li>Up to 3 Devices</li>
+                            <li>Free Installation</li>
+                            <li>24/7 Support</li>
+                        </ul>
+                    </div>
+                    <div class="package-card popular">
+                        <div class="package-header">
+                            <div class="package-name">Silver</div>
+                            <div class="package-speed">10 Mbps</div>
+                        </div>
+                        <div class="package-price">UGX 55,000/month</div>
+                        <ul class="package-features">
+                            <li>Unlimited Data</li>
+                            <li>HD Streaming</li>
+                            <li>Up to 6 Devices</li>
+                            <li>Free Installation</li>
+                            <li>Priority Support</li>
+                        </ul>
+                    </div>
+                    <div class="package-card">
+                        <div class="package-header">
+                            <div class="package-name">Gold</div>
+                            <div class="package-speed">20 Mbps</div>
+                        </div>
+                        <div class="package-price">UGX 105,000/month</div>
+                        <ul class="package-features">
+                            <li>Unlimited Data</li>
+                            <li>4K Streaming</li>
+                            <li>Up to 20 Devices</li>
+                            <li>Free Installation</li>
+                            <li>Priority Support</li>
+                        </ul>
+                    </div>
+                    <div class="package-card">
+                        <div class="package-header">
+                            <div class="package-name">Platinum</div>
+                            <div class="package-speed">50 Mbps</div>
+                        </div>
+                        <div class="package-price">UGX 155,000/month</div>
+                        <ul class="package-features">
+                            <li>Unlimited Data</li>
+                            <li>4K & Gaming</li>
+                            <li>Unlimited Devices</li>
+                            <li>Free Installation</li>
+                            <li>Premium Support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section" id="contact">
+            <div class="container">
+                <h2 style="font-size: 2.2rem; margin-bottom: 15px;">Get Connected Today</h2>
+                <p style="max-width: 700px; margin: 0 auto 30px; font-size: 1.1rem;">Experience the fastest and most reliable fiber internet in Kampala. Join the Kafunda Net family today!</p>
+                <div class="cta-buttons">
+                    <a href="tel:0704677599" class="btn btn-primary">
+                        <i class="fas fa-phone"></i> Call Now
+                    </a>
+                    <a href="https://wa.me/256771743454" class="btn btn-whatsapp">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                    <a href="#" class="btn btn-secondary payment-install">
+                        <i class="fas fa-money-bill-wave"></i> Payment via Mobile Money
+                    </a>
+                    <a href="https://wispuser.com/sprinttelecom" class="btn btn-secondary">
+                        <i class="fas fa-link"></i> Payment Link
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-column">
+                        <h3>Sprint Telecom Uganda</h3>
+                        <p><strong>Slogan: Connecting Lives</strong></p>
+                        <p>Your trusted partner for high-speed fiber internet in Kampala and surrounding areas. We're committed to providing reliable connectivity solutions for homes and businesses.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <a href="#home">Home</a>
+                        <a href="#services">Services</a>
+                        <a href="#packages">Packages</a>
+                        <a href="#about">About Us</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Contact Info</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Munyonyo, Kampala, Uganda</p>
+                        <p><i class="fas fa-phone"></i> 0704677599</p>
+                        <p><i class="fab fa-whatsapp"></i> 0771743454</p>
+                        <p><i class="fas fa-envelope"></i> info@sprinttelecom.ug</p>
+                    </div>
+                </div>
+                
+                <!-- Partner logos at the bottom as requested -->
+                <div class="partner-logos">
+                    <img src="https://i.ibb.co/r2DXYdPC/Polish-20250930-095620789.jpg" alt="Partner Logo 1">
+                    <img src="https://i.ibb.co/pjJC7QCj/Polish-20250930-095532754.jpg" alt="Partner Logo 2">
+                    <img src="https://i.ibb.co/dsnm7ZsT/Polish-20250930-095814873.jpg" alt="Partner Logo 3">
+                    <img src="https://i.ibb.co/F47RW4yh/Polish-20250930-095718710.jpg" alt="Kafunda Net Logo">
+                </div>
+                
+                <div class="copyright">
+                    <p>&copy; 2025 Sprint Telecom Uganda. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <h3 style="color: var(--primary); margin-bottom: 20px;">New Installation Payment</h3>
+            <p>Kindly make payment of UGX 130,000 via MTN Mobile Money to:</p>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0; font-weight: bold; font-size: 1.2rem;">
+                0771743454
+            </div>
+            <p>After payment, share the proof of payment via WhatsApp for initial installation setup.</p>
+            <div style="margin-top: 25px;">
+                <a href="https://wa.me/256771743454" class="btn btn-whatsapp" style="margin-right: 10px;">
+                    <i class="fab fa-whatsapp"></i> Share Proof on WhatsApp
                 </a>
-                <a href="https://wa.me/256771743454" class="btn btn-whatsapp">
-                    <i class="fab fa-whatsapp"></i> WhatsApp
-                </a>
+                <button id="closeModal" class="btn btn-secondary">Close</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Marketing Images Slider -->
-    <section class="image-slider">
-        <div class="container">
-            <div class="slides">
-                <!-- All four marketing images fully displayed as requested -->
-                <div class="slide">
-                    <img src="https://i.ibb.co/FbSDCZ1T/Polish-20250929-205752741.jpg" alt="Kafunda Net Marketing Image 1">
-                </div>
-                <div class="slide">
-                    <img src="https://i.ibb.co/7NWX5yNM/Polish-20250929-205853667.jpg" alt="Kafunda Net Marketing Image 2">
-                </div>
-                <div class="slide">
-                    <img src="https://i.ibb.co/fVVbYm3r/Polish-20250929-205953085.jpg" alt="Kafunda Net Marketing Image 3">
-                </div>
-                <div class="slide">
-                    <img src="https://i.ibb.co/DfqkBvhf/Polish-20250929-210032790.jpg" alt="Kafunda Net Marketing Image 4">
-                </div>
-            </div>
-            <div class="slider-controls">
-                <div class="slider-dot active" data-index="0"></div>
-                <div class="slider-dot" data-index="1"></div>
-                <div class="slider-dot" data-index="2"></div>
-                <div class="slider-dot" data-index="3"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Services</h2>
-                <p>We provide reliable, high-speed fiber internet solutions for homes and businesses in Kampala and surrounding areas.</p>
-            </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-home"></i>
-                    </div>
-                    <h3>Residential Fiber Internet</h3>
-                    <p>High-speed unlimited internet for your home with seamless connectivity for streaming, gaming, and remote work.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-building"></i>
-                    </div>
-                    <h3>Business Fiber Solutions</h3>
-                    <p>Dedicated fiber connections for businesses with guaranteed uptime and priority support for uninterrupted operations.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-wifi"></i>
-                    </div>
-                    <h3>Wireless Solutions</h3>
-                    <p>Wireless internet solutions for areas where fiber infrastructure is still expanding.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>24/7 Technical Support</h3>
-                    <p>Round-the-clock customer support to ensure your connection remains stable and reliable.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Packages Section -->
-    <section id="packages">
-        <div class="container">
-            <div class="section-title">
-                <!-- Kafunda Net logo inserted in the packages section as requested -->
-                <div class="kafunda-logo">
-                    <img src="https://i.ibb.co/F47RW4yh/Polish-20250930-095718710.jpg" alt="Kafunda Net">
-                </div>
-                <h2>Unlimited Internet Packages</h2>
-                <p>Choose from our range of affordable unlimited internet packages designed to meet your connectivity needs.</p>
-            </div>
-            <div class="packages-container">
-                <div class="package-card">
-                    <div class="package-header">
-                        <div class="package-name">Premium</div>
-                        <div class="package-speed">5 Mbps</div>
-                    </div>
-                    <div class="package-price">UGX 35,000/month</div>
-                    <ul class="package-features">
-                        <li>Unlimited Data</li>
-                        <li>Streaming & Browsing</li>
-                        <li>Up to 3 Devices</li>
-                        <li>Free Installation</li>
-                        <li>24/7 Support</li>
-                    </ul>
-                </div>
-                <div class="package-card popular">
-                    <div class="package-header">
-                        <div class="package-name">Silver</div>
-                        <div class="package-speed">10 Mbps</div>
-                    </div>
-                    <div class="package-price">UGX 55,000/month</div>
-                    <ul class="package-features">
-                        <li>Unlimited Data</li>
-                        <li>HD Streaming</li>
-                        <li>Up to 6 Devices</li>
-                        <li>Free Installation</li>
-                        <li>Priority Support</li>
-                    </ul>
-                </div>
-                <div class="packa
+    <script>
+        // Background slideshow for the entire site
+        const bgSlides = document.querySelectorAll('.bg-slide');
+        let currentBgSlide = 0;
+        
+        function changeBackgroundSlide() {
+            // Remove active class from current slide
+            bgSlides[currentBgSlide].classList.remove('active');
+            
+            // Move to next slide
+            currentBgSlide = (currentBgSlide + 1) % bgSlides.length;
+            
+            // Add active class to new slide
+            bgSlides[currentBgSlide].classList.add('active');
+        }
+        
+        // Change background every 8 seconds
+        setInterval(changeBackgroundSlide, 8000);
+        
+        // Auto-sliding image carousel for marketing images
+        let currentSlide = 0;
+        const slides = document.querySelector('.slides');
+        const dots = document.querySelectorAll('.slider-dot');
+        const totalSlides = 4;
+        
+        function showSlide(index) {
+            if (index >= totalSlides) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = totalSlides - 1;
+            } else {
+                currentSlide = index;
+            }
+            
+            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Update active dot
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+        
+        // Auto slide every 5 seconds
+        setInterval(() => {
+            showSlide(currentSlide + 1);
+        }, 5000);
+        
+        // Dot click events
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                showSlide(i);
+            });
+        });
+        
+        // Payment modal functionality
+        const paymentBtn = document.querySelector('.payment-install');
+        const paymentModal = document.getElementById('paymentModal');
+        const closeModal = document.getElementById('closeModal');
+        
+        paymentBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            paymentModal.style.display = 'flex';
+        });
+        
+        closeModal.addEventListener('click', () => {
+            paymentModal.style.display = 'none';
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === paymentModal) {
+                paymentModal.style.display = 'none';
+            }
+        });
+        
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const nav = document.getElementById('mainNav');
+        
+        mobileMenu.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
